@@ -1,23 +1,40 @@
 // swift-tools-version: 5.10
-// The swift-tools-version declares the minimum version of Swift required to build this package.
 
+///
 import PackageDescription
 
+
+///
 let package = Package(
-    name: "CompleteDictionary-package",
+    name: "CompleteDictionary-module",
     products: [
-        // Products define the executables and libraries a package produces, making them visible to other packages.
         .library(
-            name: "CompleteDictionary-package",
-            targets: ["CompleteDictionary-package"]),
+            name: "CompleteDictionary-module",
+            targets: ["CompleteDictionary-module"]
+        ),
+    ],
+    dependencies: [
+        .package(
+            url: "https://github.com/jeremyabannister/FoundationToolkit",
+            "0.8.0" ..< "0.9.0"
+        ),
     ],
     targets: [
-        // Targets are the basic building blocks of a package, defining a module or a test suite.
-        // Targets can depend on other targets in this package and products from dependencies.
         .target(
-            name: "CompleteDictionary-package"),
+            name: "CompleteDictionary-module",
+            dependencies: [
+                "FoundationToolkit",
+            ]
+        ),
         .testTarget(
-            name: "CompleteDictionary-packageTests",
-            dependencies: ["CompleteDictionary-package"]),
+            name: "CompleteDictionary-module-tests",
+            dependencies: [
+                "CompleteDictionary-module",
+                .product(
+                    name: "FoundationTestToolkit",
+                    package: "FoundationToolkit"
+                ),
+            ]
+        ),
     ]
 )
